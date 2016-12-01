@@ -11,15 +11,41 @@
   
   <dependencies>
   	<dependency>
-  		<groupId>com.yuhi</groupId>
-  		<artifactId>yuhi-com</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>yuhi-core</artifactId>
+  		<version>${project.version}</version>
   	</dependency>  
   	<dependency>
-  		<groupId>com.yuhi</groupId>
+  		<groupId>${project.groupId}</groupId>
   		<artifactId>yuhi-sys-facade</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<version>${project.version}</version>
   	</dependency>
+  	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+	</dependency>
+	<!-- zookeeper jar begin -->
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-recipes</artifactId>
+		</dependency>
+		<!-- zookeeper jar end -->
+		<dependency>
+			<groupId>com.cloudhopper.proxool</groupId>
+			<artifactId>proxool</artifactId>
+		</dependency>	
   </dependencies>
   <build>
     <finalName>yuhi-sys</finalName>

@@ -1,4 +1,4 @@
-package com.yuhi.aspect;
+package com.yuhi.dataSource.aspect;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -10,7 +10,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
- * 
+ * Aop数据源切换
+ * 代码污染隔离性较高
  * @version 2016年5月20日 下午3:17:52
  */
 @Aspect
@@ -18,8 +19,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class DataSourceAspect {
 	private final Logger logger = Logger.getLogger(DataSourceAspect.class);
 
-	@Pointcut("execution(* org.ibase4j.*..*Mapper.*(..))")
+	@Pointcut("execution(* com.yuhi.*..*Service.*(..))")
 	public void aspect() {
+		logger.info("begin To Change DataSource!");
 	}
 
 	/**

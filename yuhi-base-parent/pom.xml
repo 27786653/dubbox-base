@@ -8,12 +8,12 @@
 
 
 	<!-- 进行聚合的子项目 -->
-	<modules>
+<!-- 	<modules>
 		<module>../yuhi-com</module>
 		<module>../yuhi-sys</module>
 		<module>../yuhi-sys-facade</module>
 		<module>../yuhi-sys-service</module>
-	</modules>
+	</modules> -->
 
 
 	<!-- 配置私服工厂 -->
@@ -58,7 +58,7 @@
 		<!-- base -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.11</junit.version>
-		<spring.version>4.1.5.RELEASE</spring.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
 		<proxool.version>0.9.1</proxool.version>
 		<commons-fileupload.version>1.2.2</commons-fileupload.version>
 		<commons-lang3.version>3.3.1</commons-lang3.version>
@@ -74,12 +74,13 @@
 		<jstl.version>1.2</jstl.version>
 		<servlet-api.version>3.0-alpha-1</servlet-api.version>
 		<servlet_version>3.1.0</servlet_version>
-
+		<poi.version>3.9</poi.version>
+		<jxl.version>2.6.12</jxl.version>
 		<rocketmq.version>3.2.6</rocketmq.version>
 		<httpclient.version>4.3.1</httpclient.version>
-		<zookeeper.version>3.4.5</zookeeper.version>
+		<zookeeper.version>3.4.6</zookeeper.version>
 		<zkclient.version>0.7</zkclient.version>
-		<dubbo.version>2.8.4</dubbo.version>
+		<dubbo.version>2.8.3</dubbo.version>
 		<tomcat_embed_version>8.0.11</tomcat_embed_version>
 		<javassist.version>3.20.0-GA</javassist.version>
 		<mina.version>1.1.7</mina.version>
@@ -105,13 +106,38 @@
 		<fst.version>1.55</fst.version>
 	</properties>
 
+<dependencyManagement>
+
 
 	<dependencies>
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${servlet_version}</version>
-			</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.1.0</version>
+</dependency>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+		<!-- poi -->
+	<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+	<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
 		<!-- fastdfs -->
 		<dependency>
 			<groupId>fastdfs</groupId>
@@ -124,21 +150,23 @@
 			<version>5.1.38</version>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
-			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -156,6 +184,12 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-data-redis</artifactId>
+                <version>1.2.2.RELEASE</version>
+                <type>pom</type>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -259,7 +293,6 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>${servlet-api.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba.rocketmq</groupId>
@@ -462,7 +495,14 @@
 			<artifactId>cas-client-core</artifactId>
 			<version>3.1.12</version>
 		</dependency>
+		<!-- 邮件 -->
+		<dependency>
+			<groupId>com.yuhiwy</groupId>
+			<artifactId>easymail</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
+</dependencyManagement>
 	<build>
 		<finalName>bhz-parent</finalName>
 		<plugins>
@@ -477,12 +517,24 @@
 				</configuration> </plugin> -->
 			<!-- 解解决maven update project 后版本降低为1.5的bug -->
 			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-source-plugin</artifactId>
+			  <version>2.1.2</version>
+			  <executions>
+			    <execution>
+			      <goals>
+			        <goal>jar-no-fork</goal>
+			      </goals>
+			    </execution>
+			  </executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<!-- 单元测试 -->

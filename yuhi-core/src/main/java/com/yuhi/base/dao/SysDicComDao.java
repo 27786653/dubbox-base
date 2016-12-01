@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yuhi.base.BaseJdbcDao;
+import com.yuhi.base.JdbcTemplatesDao;
 
 
 @Repository
-public class SysDicComDao extends BaseJdbcDao{
+public class SysDicComDao extends JdbcTemplatesDao{
 
 	/** SQL文本：获取业务代码数据 */
 	private static final String SQL_SELECT_CODE_LIST = "SELECT ID,DIC_CODE,DIC_INFO FROM `SYS_DIC_INFO` WHERE DIC_CODE=?";

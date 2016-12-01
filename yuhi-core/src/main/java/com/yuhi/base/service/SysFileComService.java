@@ -1,4 +1,4 @@
-package com.yuhi.service;
+package com.yuhi.base.service;
 
 import java.io.File;
 import java.io.IOException;

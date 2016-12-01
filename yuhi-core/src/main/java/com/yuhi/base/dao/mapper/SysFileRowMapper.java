@@ -1,5 +1,5 @@
 
-package com.yuhi.base.dao;
+package com.yuhi.base.dao.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

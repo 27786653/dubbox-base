@@ -7,11 +7,12 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
-import com.yuhi.base.BaseJdbcDao;
+import com.yuhi.base.JdbcTemplatesDao;
+import com.yuhi.base.dao.mapper.SysFileRowMapper;
 import com.yuhi.base.entity.SysFile;
 
 @Repository
-public class SysFileComDao extends BaseJdbcDao {
+public class SysFileComDao extends JdbcTemplatesDao {
 
     /** 系统文件行映射器 */
     private static final SysFileRowMapper SYS_FILE_ROW_MAPPER = new SysFileRowMapper();

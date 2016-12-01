@@ -28,22 +28,23 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuhi.constant.Const;
+import com.yuhi.dao.BaseJdbcDao;
+import com.yuhi.exception.jdbcException;
 
 
-public abstract class BaseJdbcDao {
+public abstract class JdbcTemplatesDao implements BaseJdbcDao {
 
+	private Logger logger=Logger.getLogger(getClass());
     /** JSON数据行映射器 */
     private static final JsonRowMapper JSON_ROW_MAPPER = new JsonRowMapper();
-    private Logger logger=Logger.getLogger(getClass());
     /** JDBC调用模板 */
     private JdbcTemplate jdbcTemplate;
-
     /** 启动时间 */
     private static Date startTime;
     /** 当前表名**/
     private String tableName;
     
-    public BaseJdbcDao(){
+    public JdbcTemplatesDao(){
 				try {
 					tableName=setControllerTable();
 					if(StringUtils.isEmpty(tableName))throw new Exception();
@@ -72,38 +73,27 @@ public abstract class BaseJdbcDao {
         return jdbcTemplate;
     }
 
-    /**
-     * 
-     * @return Date 启动时间
-     */
+    @Override
     public Date getStartTime() {
         return startTime;
     }
 
-    /**
-     * 获取数据库当前时间
-     * @return Date 当前时间
-     */
+    @Override
     public Date getCurrentTime() {
         return this.getJdbcTemplate().queryForObject("SELECT now()", Date.class);
     }
 
-    /**
-     * 查询并返回JsonObject
-     * @param sql SQL语句
-     * @param args 参数
-     * @return List<JSONObject> JSON列表
-     */
+    @Override
     public List<JSONObject> queryForJsonList(String sql, Object... args) {
         return this.jdbcTemplate.query(sql, JSON_ROW_MAPPER, args);
     }
-
-    /**
-     * 查询并返回单个JsonObject
-     * @param sql SQL语句
-     * @param args 参数
-     * @return JSONObject JSON数据
-     */
+    @Override
+    public List<JSONObject> queryForJsonListPage(String sql,int start, int limit,Object... args){
+    	StringBuffer sb=new StringBuffer(sql);
+    	appendPageSql(sb,start,limit);
+    	return this.jdbcTemplate.query(sb.toString(), JSON_ROW_MAPPER, args);
+    }
+    @Override
     public JSONObject queryForJsonObject(String sql, Object... args) {
         List<JSONObject> jsonList = queryForJsonList(sql, args);
         if (jsonList == null || jsonList.size() < 1) {
@@ -111,37 +101,34 @@ public abstract class BaseJdbcDao {
         }
         return jsonList.get(0);
     }
-
-    /**
-     * @param sql SQL语句
-     * @param args 参数
-     * @return String 文本
-     */
+    @Override
+    public Long queryForCountNum(String sql, Object... args) {
+    	return queryforType(Long.class,sql,args);
+    }
+    @Override
     public String queryForString(String sql, Object... args) {
-        List<String> dataList = this.jdbcTemplate.queryForList(sql, args, String.class);
+    	return queryforType(String.class,sql,args);
+    }
+    private <T> T queryforType(Class type,String sql, Object... args){
+    	List<T> dataList = this.jdbcTemplate.queryForList(sql, args, type);
         if (dataList == null || dataList.size() < 1) {
             return null;
         }
         return dataList.get(0);
     }
 
-    /**
-     * 
-     * @param sql SQL语句
-     * @param start 开始记录行数（0开始）
-     * @param limit 每页限制记录数
-     */
-    public void appendPageSql(StringBuffer sql, int start, int limit) {
-        sql.insert(0, "SELECT * FROM (SELECT PAGE_VIEW.*, ROWNUM AS ROW_SEQ_NO FROM (");
-        sql.append(") PAGE_VIEW WHERE ROWNUM <= " + (start + limit));
-        sql.append(") WHERE ROW_SEQ_NO > " + start);
+    private void appendPageSql(StringBuffer sql, int startpage, int limit) {
+//    	oracle
+//        sql.insert(0, "SELECT * FROM (SELECT PAGE_VIEW.*, ROWNUM AS ROW_SEQ_NO FROM (");
+//        sql.append(") PAGE_VIEW WHERE ROWNUM <= " + (start + limit));
+//        sql.append(") WHERE ROW_SEQ_NO > " + start);
+//    	mysql
+    	if(startpage<0||limit<0)throw new jdbcException("error Page Or Limit Number!");
+    	sql.append(" LIMIT "+((startpage-1)*limit)+","+limit);
     }
 
 
-    /**
-     * 数据库id生成器
-     * @return String 唯一键值
-     */
+    @Override
     public String generateKey() {
         String sql = "SELECT   date_format(NOW(),'%Y%m%d')  FROM DUAL ";//%Y%m%d%h%i%s'
         String pre = this.getJdbcTemplate().queryForObject(sql, String.class);
@@ -236,24 +223,13 @@ public abstract class BaseJdbcDao {
         }
         return DateFormatUtils.format(date, Const.FORMAT_TIMESTAMP);
     }
-    
-    /**
-     * 插入
-     * @param tableName 表名
-     * @param data JSONObject对象
-     */
+    @Override
     public int insert(JSONObject data) {
     	List<Object> sqlArgs = new ArrayList<Object>();
     	final String sql=getInsertSql(data,sqlArgs);
         return this.getJdbcTemplate().update(sql, sqlArgs.toArray()); 
     }
-    /**
-     * 插入并返回id
-     * 注意：该方法只适合于自增id的返回
-     * @param tableName
-     * @param data
-     * @return
-     */
+    @Override
     public int insertOrReturnId(JSONObject data) { 
     	final List<Object> sqlArgs = new ArrayList<Object>();
     	final String sql=getInsertSql(data,sqlArgs);
@@ -273,12 +249,8 @@ public abstract class BaseJdbcDao {
         return autoIncId;  
     }  
    
-    /**
-     * 批量插入数据
-     * @param tableName 数据库表名称
-     * @param list 插入数据集合
-     */
-    protected void insertBatch(final List<LinkedHashMap<String, Object>> list) {
+    @Override
+    public void insertBatch(final List<LinkedHashMap<String, Object>> list) {
         
         if (list.size() <= 0) {
             return;
@@ -320,12 +292,7 @@ public abstract class BaseJdbcDao {
             }
       });
     } 
-    /**
-     * 删除数据多条件
-     * @param tableName 表名
-     * @param data JSONObject对象
-     *and id=? 
-     */
+    @Override
     public int delete( String[] array,String[] param) {
     	if (array.length<=0) {
             return 0;
@@ -338,23 +305,12 @@ public abstract class BaseJdbcDao {
 		}
         return this.getJdbcTemplate().update(sql.toString(), param); 
     }
-    /**
-     * 根据id删除数据
-     * @param tableName
-     * @param id
-     * @return
-     */
+    @Override
     public int delete(String id) {
     	String sql=" Delete From "+tableName + " where id=? ";
     	return this.getJdbcTemplate().update(sql, id); 
     }
-    /**
-     * 修改
-     * @param tableName 表名
-     * @param map 
-     * @param data JSONObject对象
-     *and id=? 
-     */
+    @Override
     public int update(Map<String,Object> paramMap,String id) {
     	List<Object> array=new ArrayList<Object>();
         StringBuffer sql = new StringBuffer();

@@ -8,16 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.yuhi.sys.entity.SysUser;
+import com.alibaba.fastjson.JSONObject;
 import com.yuhi.sys.facade.SysUserFacade;
-/**
- * <B>系统名称：</B><BR>
- * <B>模块名称：</B><BR>
- * <B>中文类名：</B><BR>
- * <B>概要说明：</B><BR>
- * @author bhz（Alienware）
- * @since 2016年2月29日
- */
 @Controller
 public class SysIndexController {
 	
@@ -26,9 +18,9 @@ public class SysIndexController {
 
 
     @RequestMapping("/sysindex.html")
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView ret = new ModelAndView();
-        SysUser user = this.sysUserFacade.getUser();
+        JSONObject user = this.sysUserFacade.getById("admin");
         System.out.println(user);
         
         return ret;
