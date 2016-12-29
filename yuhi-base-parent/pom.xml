@@ -8,13 +8,14 @@
 
 
 	<!-- 进行聚合的子项目 -->
-<!-- 	<modules>
+	<modules>
 		<module>../yuhi-com</module>
-		<module>../yuhi-sys</module>
+		<module>../yuhi-core</module>
+		<!-- <module>../yuhi-sys</module>
 		<module>../yuhi-sys-facade</module>
-		<module>../yuhi-sys-service</module>
-	</modules> -->
-
+		<module>../yuhi-sys-service</module> -->
+	</modules>
+ 
 
 	<!-- 配置私服工厂 -->
 	<repositories>
@@ -59,7 +60,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.11</junit.version>
 		<spring.version>4.2.5.RELEASE</spring.version>
-		<proxool.version>0.9.1</proxool.version>
+		<druid.version>1.0.5</druid.version>
 		<commons-fileupload.version>1.2.2</commons-fileupload.version>
 		<commons-lang3.version>3.3.1</commons-lang3.version>
 		<commons-io.version>2.4</commons-io.version>
@@ -104,24 +105,31 @@
 		<kryo.version>2.24.0</kryo.version>
 		<kryo-serializers.version>0.26</kryo-serializers.version>
 		<fst.version>1.55</fst.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <jetty.version>8.1.20.v20160902</jetty.version>
+	    <brave.version>3.16.0</brave.version>
+	    <zipkin-reporter.version>0.6.9</zipkin-reporter.version>
+	    <swagger.version>sf.1.0.0-SNAPSHOT</swagger.version>
 	</properties>
-
 <dependencyManagement>
 
-
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>3.1.0</version>
-</dependency>
-	
 		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>${druid.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.1.0</version>
+		</dependency>
+	<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-		</dependency>
+	</dependency>
 		<!-- poi -->
 	<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -159,6 +167,24 @@
 			<artifactId>spring-core</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-tx</artifactId>
+		    <version>${spring.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		  <dependency>  
+		    <groupId>org.aspectj</groupId>  
+		    <artifactId>aspectjweaver</artifactId>  
+		    <version>1.7.2</version>  
+		  </dependency>  
+		  <dependency>  
+		    <groupId>org.aspectj</groupId>  
+		    <artifactId>aspectjrt</artifactId>  
+		    <version>1.7.3</version>  
+		  </dependency>  
+				
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -199,11 +225,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.cloudhopper.proxool</groupId>
-			<artifactId>proxool</artifactId>
-			<version>${proxool.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -324,11 +345,6 @@
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
 			<version>${zkclient.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-framework</artifactId>
-			<version>2.4.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.curator</groupId>
@@ -501,6 +517,62 @@
 			<artifactId>easymail</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!-- track -->
+		<dependency>
+		        <groupId>io.zipkin.brave</groupId>
+		        <artifactId>brave-core-spring</artifactId>
+		        <version>${brave.version}</version>
+		    </dependency>
+		    <dependency>
+		      <groupId>io.zipkin.reporter</groupId>
+		      <artifactId>zipkin-sender-okhttp3</artifactId>
+		      <version>${zipkin-reporter.version}</version>
+		    </dependency>
+			<dependency>
+		        <groupId>io.zipkin.brave</groupId>
+		        <artifactId>brave-spring-web-servlet-interceptor</artifactId>
+		        <version>${brave.version}</version>
+		    </dependency>
+		    <!-- swagger -->
+			<dependency>  
+			    <groupId>io.swagger</groupId>  
+			    <artifactId>swagger-core</artifactId>  
+			    <version>${swagger.version}</version> 
+			    <exclusions>
+			    	<exclusion>
+				    	<groupId>org.springframework</groupId>  
+					    <artifactId>spring-core</artifactId>  
+			    	</exclusion>
+			    	<exclusion>
+				    	<groupId>org.springframework</groupId>  
+					    <artifactId>spring-context</artifactId>  
+			    	</exclusion>
+			    	<exclusion>
+				    	<groupId>org.springframework</groupId>  
+					    <artifactId>spring-context-support</artifactId>  
+			    	</exclusion>
+			    </exclusions>
+			</dependency>  
+			<dependency>  
+			    <groupId>io.swagger</groupId>  
+			    <artifactId>swagger-jaxrs</artifactId>  
+			    <version>${swagger.version}</version>  
+			</dependency>  
+			<dependency>  
+			    <groupId>io.swagger</groupId>  
+			    <artifactId>swagger-jersey-jaxrs</artifactId>  
+			    <version>${swagger.version}</version>  
+			</dependency>  
+			<dependency>  
+			    <groupId>io.swagger</groupId>  
+			    <artifactId>swagger-jersey2-jaxrs</artifactId>  
+			    <version>${swagger.version}</version>  
+			</dependency>  
+			<dependency>  
+			    <groupId>org.reflections</groupId>  
+			    <artifactId>reflections</artifactId>  
+			    <version>0.9.10</version>  
+			</dependency>  
 	</dependencies>
 </dependencyManagement>
 	<build>
@@ -547,20 +619,6 @@
 						<include>**/*Test*.java</include>
 					</includes>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<!-- 绑定到特定的生命周期之后，运行maven-source-pluin 运行目标为jar-no-fork -->
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
