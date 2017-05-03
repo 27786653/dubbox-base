@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>房间列表</title>
+		<link rel="stylesheet" th:href="@{/resource/plugins/layui/css/layui.css}" media="all" />
+		<link rel="stylesheet" th:href="@{/resource/plugins/font-awesome/css/font-awesome.min.css}"/>
+		<link rel="stylesheet" th:href="@{/resource/css/global.css}" media="all"/>
+		<link rel="stylesheet" th:href="@{/resource/css/begtable.css}" />
+		<!-- <link rel="stylesheet" th:href="@{/resource/css/table.css}" /> -->
+	</head>
+	<body>
+		<div class="admin-main">
+			<!-- 搜索查询框  -->
+			<blockquote class="layui-elem-quote">
+			<form class="layui-form layui-form-pane" action="/admin/article/index.html" method="get">
+               <div class="layui-inline">
+					<label class="layui-form-label">查询选项</label>
+					<div class="layui-input-inline">
+						<select name="aaa">
+							<option value="">管理区编号</option>
+							<option value="浙江" selected="">管理区名称</option>
+							<option value="你的工号">管理区地址</option>
+							<option value="你最喜欢的老师">负责人</option>
+							<option value="你的工号">联系人</option>
+							<option value="你最喜欢的老师">联系电话</option>
+							<option value="你最喜欢的老师">备注</option>
+						</select>
+					</div>
+				</div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="" placeholder="请输入关键词" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn" type="button" id="search">搜索</button>
+                </div> 
+            </form>
+            </blockquote>
+            
+            <!-- 操作区 -->
+			<blockquote class="layui-elem-quote layui-quote-nm">
+				<a href="javascript:;" class="layui-btn layui-btn-small" id="refresh">
+					<i class="layui-icon">&#xe608;</i> 刷新
+				</a>
+				<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
+					<i class="layui-icon">&#xe608;</i> 添加
+				</a>
+				<a href="javascript:;" class="layui-btn layui-btn-small" id="update">
+					<i class="layui-icon">&#xe608;</i> 修改
+				</a>
+				<a href="javascript:;" class="layui-btn layui-btn-small" id="delete">
+					<i class="layui-icon">&#xe608;</i> 删除
+				</a>
+				<a href="#" class="layui-btn layui-btn-small" id="import">
+					<i class="layui-icon">&#xe608;</i> 导入
+				</a>
+				<a href="#" class="layui-btn layui-btn-small" id="export">
+					<i class="fa fa-shopping-cart" aria-hidden="true"></i> 导出
+				</a>
+				<a href="#" class="layui-btn layui-btn-small" id="upload">
+					<i class="layui-icon">&#xe615;</i> 上传附件
+				</a>
+				<a href="#" class="layui-btn layui-btn-small" id="delfile">
+					<i class="layui-icon">&#xe615;</i> 删除附件
+				</a>
+			</blockquote>
+			
+			<!-- 数据表格 -->
+			<fieldset class="layui-elem-field">
+			<legend>房间列表</legend>
+			<div class="layui-field-box">
+				<div id="xx" style=" width: 100%; height: 150%; border: 1px solid #DDDDDD;"></div>
+			</div>
+			</fieldset>
+		</div>
+		<script type="text/javascript" th:src="@{/resource/plugins/layui/layui.js}"></script>
+		<script type="text/javascript" th:src="@{/pages/modules/room/room.js}"></script>
+	</body>
+
+</html>

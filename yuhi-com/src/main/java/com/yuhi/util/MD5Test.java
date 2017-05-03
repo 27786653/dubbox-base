@@ -8,7 +8,7 @@ public class MD5Test {
 	public static void main(String[] args) {
 		
 		//原始 密码 
-		String source = "qnhadmin888";
+		String source = "htb1admin888";
 		//盐
 		String salt = "test";
 		//散列次数

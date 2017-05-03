@@ -14,12 +14,15 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -58,7 +61,9 @@ public abstract class JdbcTemplatesDao implements BaseJdbcDao {
     /**
      * @param dataSource 数据源
      */
-    @Autowired
+    @Lazy
+    @Resource
+    @Qualifier("dataSource")
     public void initJdbcTemplate(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         if (startTime == null) {
@@ -88,9 +93,9 @@ public abstract class JdbcTemplatesDao implements BaseJdbcDao {
         return this.jdbcTemplate.query(sql, JSON_ROW_MAPPER, args);
     }
     @Override
-    public List<JSONObject> queryForJsonListPage(String sql,int start, int limit,Object... args){
+    public List<JSONObject> queryForJsonListPage(String sql,int pageNum, int pagesize,Object... args){
     	StringBuffer sb=new StringBuffer(sql);
-    	appendPageSql(sb,start,limit);
+    	appendPageSql(sb,pageNum,pagesize);
     	return this.jdbcTemplate.query(sb.toString(), JSON_ROW_MAPPER, args);
     }
     @Override
@@ -103,28 +108,46 @@ public abstract class JdbcTemplatesDao implements BaseJdbcDao {
     }
     @Override
     public Long queryForCountNum(String sql, Object... args) {
-    	return queryforType(Long.class,sql,args);
+    	return queryforObjByType(Long.class,sql,args);
     }
     @Override
     public String queryForString(String sql, Object... args) {
-    	return queryforType(String.class,sql,args);
+    	return queryforObjByType(String.class,sql,args);
     }
-    private <T> T queryforType(Class type,String sql, Object... args){
+    @Override
+    public <T> List<T> queryforListByType(Class type,String sql, Object... args){
     	List<T> dataList = this.jdbcTemplate.queryForList(sql, args, type);
         if (dataList == null || dataList.size() < 1) {
             return null;
         }
-        return dataList.get(0);
+        return dataList;
     }
-
-    private void appendPageSql(StringBuffer sql, int startpage, int limit) {
+    @Override
+    public <T> List<Map<String, Object>> queryforMap(String sql, Object... args){
+    	List<Map<String,Object>> dataList = this.jdbcTemplate.queryForList(sql, args);
+        if (dataList == null || dataList.size() < 1) {
+            return null;
+        }
+        return dataList;
+    }
+	private <T> T queryforObjByType(Class type,String sql, Object... args){
+		
+		return (T) this.jdbcTemplate.queryForObject(sql, type, args);
+//    	List<T> dataList = this.jdbcTemplate.queryForList(sql, args, type);
+//        if (dataList == null || dataList.size() < 1) {
+//            return null;
+//        }
+//        return dataList.get(0);
+    }
+	
+    private void appendPageSql(StringBuffer sql, int pageNum, int pagesize) {
 //    	oracle
 //        sql.insert(0, "SELECT * FROM (SELECT PAGE_VIEW.*, ROWNUM AS ROW_SEQ_NO FROM (");
 //        sql.append(") PAGE_VIEW WHERE ROWNUM <= " + (start + limit));
 //        sql.append(") WHERE ROW_SEQ_NO > " + start);
 //    	mysql
-    	if(startpage<0||limit<0)throw new jdbcException("error Page Or Limit Number!");
-    	sql.append(" LIMIT "+((startpage-1)*limit)+","+limit);
+    	if(pageNum<0||pagesize<0)throw new jdbcException("error Page Or Limit Number!");
+    	sql.append(" LIMIT "+((pageNum-1)*pagesize)+","+pagesize);
     }
 
 
@@ -309,6 +332,10 @@ public abstract class JdbcTemplatesDao implements BaseJdbcDao {
     public int delete(String id) {
     	String sql=" Delete From "+tableName + " where id=? ";
     	return this.getJdbcTemplate().update(sql, id); 
+    }
+    @Override
+    public int updateBySql(String sql,String... args) {
+        return this.getJdbcTemplate().update(sql,args); 
     }
     @Override
     public int update(Map<String,Object> paramMap,String id) {

@@ -16,14 +16,7 @@ import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerGroup;
 import org.csource.fastdfs.TrackerServer;
 
-/**
- * <B>系统名称：</B><BR>
- * <B>模块名称：</B><BR>
- * <B>中文类名：</B>FastDFS分布式文件系统操作客户端<BR>
- * <B>概要说明：</B>FastDFS分布式文件系统操作客户端<BR>
- * @author bhz
- * @since 2013年11月10日
- */
+
 public class FastDFSClientUtils {
 
 	private static final String CONF_FILENAME = Thread.currentThread().getContextClassLoader().getResource("fastdfs_client.conf").getPath();
@@ -40,8 +33,11 @@ public class FastDFSClientUtils {
 			ClientGlobal.init(CONF_FILENAME);
 			TrackerGroup trackerGroup = ClientGlobal.g_tracker_group;
 			trackerClient = new TrackerClient(trackerGroup);
+			if(trackerClient==null)logger.error("文件客户端初始化失败!!!");
+			else logger.info("FastDFS Init SUCCESS!!!");
 		} catch (Exception e) {
 			logger.error(e);
+			logger.error("文件客户端初始化失败!!!");
 		}
 	}
 	

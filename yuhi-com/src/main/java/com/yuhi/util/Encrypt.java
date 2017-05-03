@@ -3,7 +3,11 @@ package com.yuhi.util;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+/**
+ * 加密工具类
+ * @author 李森林
+ *
+ */
 public class Encrypt {
 
 	/**

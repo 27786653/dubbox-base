@@ -3,12 +3,14 @@ package com.yuhi.base;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.JdbcUtils;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.yuhi.util.DateUtils;
 
 /**
  * <B>系统名称：</B>通用系统功能<BR>
@@ -38,8 +40,10 @@ public class JsonRowMapper implements RowMapper<JSONObject> {
         ResultSetMetaData rsmd = rs.getMetaData();
         int count = rsmd.getColumnCount();
         for (int i = 1; i <= count; i++) {
-            key = JdbcUtils.lookupColumnName(rsmd, i);
+            key = JdbcUtils.lookupColumnName(rsmd, i).toLowerCase();
             obj = JdbcUtils.getResultSetValue(rs, i);
+            if(obj!=null)if(rsmd.getColumnTypeName(i).equals("DATETIME")||rsmd.getColumnTypeName(i).equals("DATE")||rsmd.getColumnTypeName(i).equals("TIMESTAMP"))
+            	obj=DateUtils.formatDateTime((Date)obj);
             try {
                 json.put(key, obj);
             }
@@ -48,4 +52,5 @@ public class JsonRowMapper implements RowMapper<JSONObject> {
         }
         return json;
     }
+    
 }

@@ -11,9 +11,13 @@
 	<modules>
 		<module>../yuhi-com</module>
 		<module>../yuhi-core</module>
-		<!-- <module>../yuhi-sys</module>
+		<module>../yuhi-sys</module>
 		<module>../yuhi-sys-facade</module>
-		<module>../yuhi-sys-service</module> -->
+		<module>../yuhi-sys-service</module>
+		<module>../yuhi-common-support</module>
+		<module>../yuhi-contro-support</module>
+		<module>../common-extjsUI</module>
+		<module>../common-easyUI</module>
 	</modules>
  
 
@@ -21,7 +25,7 @@
 	<repositories>
 		<repository>
 			<id>nexus</id>
-			<url>http://183.57.43.3:12990/repository/maven-public/</url>
+			<url>http://121.9.212.76:12990/repository/maven-public/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -33,7 +37,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>nexus</id>
-			<url>http://183.57.43.3:12990/repository/maven-public/</url>
+			<url>http://121.9.212.76:12990/repository/maven-public/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -47,12 +51,12 @@
 		<repository>
 			<id>nexus</id>
 			<name>Nexus Release Repository</name>
-			<url>http://183.57.43.3:12990/repository/maven-releases/</url>
+			<url>http://121.9.212.76:12990/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>nexus</id>
 			<name>Nexus Snapshot Repository</name>
-			<url>http://183.57.43.3:12990/repository/maven-snapshots/</url>
+			<url>http://121.9.212.76:12990/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<properties>
@@ -362,6 +366,24 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 			<version>${dubbo.version}</version>
+			<exclusions>
+				 <exclusion> 
+		            <groupId>org.springframework</groupId> 
+		            <artifactId>spring</artifactId> 
+		        </exclusion> 
+		        <exclusion> 
+		            <groupId>org.springframework</groupId> 
+		            <artifactId>spring-beans</artifactId> 
+		        </exclusion> 
+		          <exclusion> 
+		            <groupId>org.springframework</groupId> 
+		            <artifactId>spring-expression</artifactId> 
+		        </exclusion> 
+		         <exclusion> 
+		            <groupId>org.springframework</groupId> 
+		            <artifactId>spring-web</artifactId> 
+		        </exclusion> 
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>

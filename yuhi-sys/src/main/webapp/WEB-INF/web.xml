@@ -6,7 +6,7 @@
   </welcome-file-list>
   <context-param>
     <param-name>webAppRootKey</param-name>
-    <param-value>bhz-sys.root</param-value>
+    <param-value>yuhi-sys.root</param-value>
   </context-param>
   <context-param>
     <param-name>log4jConfigLocation</param-name>
@@ -41,9 +41,9 @@
       <url-pattern>*.json</url-pattern>
   </servlet-mapping> 
  
-  <filter>
+  <!-- filter>
       <filter-name>GzipFilter</filter-name>
-      <filter-class>com.yuhi.util.GzipFilter</filter-class>
+      <filter-class>com.yuhi.support.GzipFilter</filter-class>
       <init-param>
           <param-name>headers</param-name>
           <param-value>Content-Encoding=gzip</param-value>
@@ -56,7 +56,7 @@
   <filter-mapping>
       <filter-name>GzipFilter</filter-name>
       <url-pattern>*.gzcss</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
      
  <session-config>
    <session-timeout>15</session-timeout>

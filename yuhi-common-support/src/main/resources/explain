@@ -1,0 +1,5 @@
+
+<dubbo:reference filter="xxx,yyy" /> <!-- 消费方调用过程拦截 -->
+<dubbo:consumer filter="xxx,yyy"/> <!-- 消费方调用过程缺省拦截器，将拦截所有reference -->
+<dubbo:service filter="xxx,yyy" /> <!-- 提供方调用过程拦截 -->
+<dubbo:provider filter="xxx,yyy"/> <!-- 提供方调用过程缺省拦截器，将拦截所有service -->

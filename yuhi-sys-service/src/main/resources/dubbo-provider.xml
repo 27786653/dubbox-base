@@ -12,20 +12,21 @@
 	<!-- 引入配置文件 -->
     <context:property-placeholder location="classpath:config.properties" />
 
-    <dubbo:application name="${dubbox.application}" owner="programmer" organization="dubbox"/>
-
+    <dubbo:application  name="${dubbox.application}" owner="programmer" organization="dubbox"/>
+	
 	<!-- zookeeper注册中心 -->
-    <dubbo:registry address="${dubbox.registry.address}"/>
+    <dubbo:registry  address="${dubbox.registry.address}"/>
 
-    <dubbo:annotation package="com.yuhi.sys" />
+    <dubbo:annotation  package="com.yuhi.sys" />
     
     <!-- kryo实现序列化 -->
-    <dubbo:protocol name="dubbo" serialization="kryo" optimizer="com.yuhi.sys.serial.SerializationOptimizerImpl" />
+    <dubbo:protocol  name="dubbo" port="20881" serialization="kryo" optimizer="com.yuhi.sys.serial.SerializationOptimizerImpl" />
    
 	<!-- rest -->
-    <dubbo:protocol name="rest" server="${dubbox.rest.server}" port="${dubbox.rest.port}" contextpath="${dubbox.rest.contextpath}" threads="${dubbox.rest.threads}" accepts="${dubbox.rest.accepts}" />
+    <dubbo:protocol name="rest"  server="${dubbox.rest.server}" port="${dubbox.rest.port}" contextpath="${dubbox.rest.contextpath}" threads="${dubbox.rest.threads}" accepts="${dubbox.rest.accepts}" />
 	
-     
+	<!-- 拓展fitel -->
+	<!-- <dubbo:provider filter="ApiLogFilter,TrackFilter"/> -->
    	<!-- 具体的实现bean -->
 	<!--
 	<bean id="sysUserService" class="bhz.sys.service.SysUserService" />
@@ -33,7 +34,7 @@
 	<!-- 声明需要暴露的服务接口,同时提供本地dubbo方法调用和rest方法调用 -->
 	<!--  
 	<dubbo:service interface="bhz.sys.facade.SysUserFacade" ref="sysUserService" protocol="rest,dubbo" />
-	-->
-	
+	 -->
+	<!-- <dubbo:reference interface="com.yuhi.admin.facade.userC" id="uc"/>	 -->
 	
 </beans>

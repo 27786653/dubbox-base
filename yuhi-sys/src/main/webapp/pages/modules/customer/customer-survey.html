@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" >
+<head th:include="modules/base/contentTemplate::cssres">
+<meta charset="UTF-8" />
+<title>左右分布局</title>
+</head>
+<body>
+<div class="site-demo" >
+	
+	<div class="site-demo-result result-2" style="height:97%;">
+		<fieldset class="layui-elem-field " style="overflow: hidden;height:100%">
+			<legend>房间导航</legend>
+			 <ul id="treeDemo" class="ztree"></ul>
+		</fieldset> 
+	</div>
+	<!-- 楼宇 -->
+	<div class="site-demo-result " style="margin-left:2%;width: 75%;height:100%;">
+		 <div class="layui-tab  layui-tab-card"  lay-filter="fromtab" style="height: 96%">
+			  <ul class="layui-tab-title">
+			    <li class="layui-this">基础信息</li>
+			    <li>产权信息</li>
+			    <li>附件信息</li>
+			  </ul>
+			  <div class="layui-tab-content" >
+			  <!-- tab1 -->
+			  <div class="layui-tab-item">
+			  asdasd
+			    </div>
+			  <!-- end tab1 -->
+			  
+			  <!-- tab2 -->
+			    <div class="layui-tab-item">asdasd2
+			    </div>
+			  <!-- end tab2 -->
+			  
+			  <!-- tab3 -->
+			    <div class="layui-tab-item layui-show">asdasd3
+			   </div>
+			  <!-- end tab3 -->
+		</div>
+    </div>  
+    
+ </div>
+</div>
+ 
+ <div class="foot"
+		th:include="modules/base/contentTemplate::jsres(customer,customersuvey)"></div>
+	<!-- ztree扩展 -->
+	<script type="text/javascript"  th:src="@{/resource/plugins/ztree/js/jquery.ztree.all-3.5.min.js}"></script>
+	<script type="text/javascript"  th:src="@{/resource/plugins/ztree/js/jquery.ztree.exhide-3.5.min.js}"></script>
+	
+</body>
+</html>

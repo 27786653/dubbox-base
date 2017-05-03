@@ -12,7 +12,7 @@
   <name>yuhi-sys-service</name>
   
 	<build>
-		<finalName>bhz-sys-service</finalName>
+		<finalName>yuhi-sys-service</finalName>
 		<!-- 配置文件  -->
 		<resources>
 			<resource>
@@ -30,6 +30,14 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>spring-context.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>${project.build.directory}/classes/META-INF/dubbo</targetPath>
+				<directory>${childDirectoryName}src/main/resources/META-INF/dubbo</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>com.alibaba.dubbo.rpc.Filter</include>
 				</includes>
 			</resource>
 		</resources>	
@@ -69,8 +77,8 @@
 			    <artifactId>maven-compiler-plugin</artifactId>
 			    <version>3.5.1</version>
 			    <configuration>
-			      <source>1.8</source>
-			      <target>1.8</target>
+			      <source>1.7</source>
+			      <target>1.7</target>
 			    </configuration>
 			</plugin>
 			<!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
@@ -118,25 +126,25 @@
 	</build>  
   
   <dependencies>
+  		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		</dependency>
      <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
-<dependency>
-    <groupId>org.javassist</groupId>
-    <artifactId>javassist</artifactId>
-</dependency>
-  	<dependency>
+	<dependency>
+	    <groupId>org.javassist</groupId>
+	    <artifactId>javassist</artifactId>
+	</dependency>
+	<dependency>
   		<groupId>${project.groupId}</groupId>
   		<artifactId>yuhi-core</artifactId>
   		<version>${project.version}</version>
   	</dependency>
-  	<dependency>
+	<dependency>
   		<groupId>${project.groupId}</groupId>
   		<artifactId>yuhi-sys-facade</artifactId>
   		<version>${project.version}</version>
   	</dependency> 
-  		<dependency>
-			<groupId>com.cloudhopper.proxool</groupId>
-			<artifactId>proxool</artifactId>
-		</dependency>
 		<!-- zookeeper jar begin -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>

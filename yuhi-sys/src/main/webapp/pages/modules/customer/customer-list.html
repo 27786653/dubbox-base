@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" >
+<head th:include="modules/base/contentTemplate::cssres">
+<meta charset="UTF-8" />
+<title>基础客户列表</title>
+</head>
+<body>
+
+	<div class="admin-main">
+		<!-- 搜索查询框  -->
+		<blockquote class="layui-elem-quote">
+			<form id="searchForm" class="layui-form layui-form-pane"
+				action="/admin/article/index.html" method="get">
+				<div class="layui-inline">
+					<label class="layui-form-label">查询选项</label>
+					<div class="layui-input-inline">
+						<select name="serachfiled">
+							<option value="">管理区编号</option>
+							<option value="浙江" selected="">管理区名称</option>
+							<option value="你的工号">管理区地址</option>
+							<option value="你最喜欢的老师">负责人</option>
+							<option value="你的工号">联系人</option>
+							<option value="你最喜欢的老师">联系电话</option>
+							<option value="你最喜欢的老师">备注</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+						<input type="text" name="keyword" value="" placeholder="请输入关键词"
+							class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<button class="layui-btn" type="button" id="search"
+						onclick="searchobj()">搜索</button>
+				</div>
+			</form>
+		</blockquote>
+		<!-- 操作区 -->
+		<blockquote class="layui-elem-quote layui-quote-nm">
+			<a href="javascript:;" class="layui-btn layui-btn-small" id="add"
+				onclick="addobj()"> <i class="layui-icon">&#xe608;</i> 添加
+			</a> <a href="javascript:;" class="layui-btn layui-btn-small"
+				onclick="updateobj()" id="update"> <i class="layui-icon">&#xe608;</i>
+				修改
+			</a> <a href="javascript:;" class="layui-btn layui-btn-small"
+				onclick="deleteObj()" id="delete"> <i class="layui-icon">&#xe608;</i>
+				删除
+			</a> <a href="#" class="layui-btn layui-btn-small" id="import"> <i
+				class="layui-icon">&#xe608;</i> 导入
+			</a> <a href="#" class="layui-btn layui-btn-small" id="export"> <i
+				class="fa fa-shopping-cart" aria-hidden="true"></i> 导出
+			</a> <a href="#" class="layui-btn layui-btn-small" id="upload"> <i
+				class="layui-icon">&#xe615;</i> 上传附件
+			</a> <a href="#" class="layui-btn layui-btn-small" id="delfile"> <i
+				class="layui-icon">&#xe615;</i> 删除附件
+			</a>
+		</blockquote>
+
+		<fieldset class="layui-elem-field" >
+			<legend>房间列表</legend>
+					<!-- 数据表格 -->
+					<div class="layui-field-box" style="width: 1000px;overflow:scroll;">
+						<table id="searchTable" style="width: 2000px;min-width:0px;">
+							<thead><tr>
+								<th w_check="true" w_index="id" width="3%;"></th>
+								<th w_index="id" w_sort="id" w_hidden="true" width="5%;">ID</th>
+								<th w_index="bc_name" width="5%;">客户名称</th>
+								<th w_index="bc_attribute" width="5%;">客户属性</th>
+								<th w_index="bc_concat_name" width="150px">联系人称呼</th>
+								<th w_index="bc_concat_phone" width="5%;">联系人</th>
+								<th w_index="bc_callnum" width="5%;">固定电话</th>
+								<th w_index="bc_type" width="5%;">客户类别</th>
+								<th w_index="bc_birther_date" width="5%;">生日</th>
+								<th w_index="bc_create_by" width="5%;">创建人</th>
+								<th w_index="bc_create_date" width="5%;">创建时间</th>
+								<th w_index="bc_update_by" width="5%;">修改人</th>
+								<th w_index="bc_update_date" width="5%;">修改时间</th>
+								<th w_index="bc_idcard" width="15%;">身份证号码</th>
+								<th w_index="bc_email" width="5%;">邮件</th>
+								<th w_index="bc_qq_num" width="5%;">qq号码</th>
+								<th w_index="bc_work" width="5%;">工作单位</th>
+								<th w_index="bc_urgent_phone" width="150px">紧急联系人</th>
+							</tr></thead>
+							<tbody>
+							<tr><td colspan="8">没有数据可以用于显示。</td></tr>
+							</tbody>
+						</table>
+					</div>
+		</fieldset>
+
+	</div>
+	<div class="foot"
+		th:include="modules/base/contentTemplate::jsres(customer,customer)"></div>
+</body>
+</html>

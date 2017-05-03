@@ -12,6 +12,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+/**
+ * 内容压缩过滤器
+ * @author 李森林
+ *
+ */
 public class GzipFilter implements Filter {
 
     /** 参数键值：头信息 */

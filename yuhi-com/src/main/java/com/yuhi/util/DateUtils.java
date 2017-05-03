@@ -365,7 +365,10 @@ public class DateUtils extends PropertyEditorSupport {
 	public static String formatDate(Date date) {
 		return date_sdf.format(date);
 	}
-
+	public static String formatDateTime(Date date) {
+		if(date==null)return null;
+		return datetimeFormat.format(date);
+	}
 	/**
 	 * 指定毫秒数表示日期的默认显示，具体格式：年-月-日
 	 * 

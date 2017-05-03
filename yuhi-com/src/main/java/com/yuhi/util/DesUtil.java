@@ -2,7 +2,11 @@ package com.yuhi.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 对称加密算法
+ * @author 李森林
+ *
+ */
 public class DesUtil {
 	
 	public static final String KEY = "foshan";

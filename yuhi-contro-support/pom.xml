@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yuhi</groupId>
+  <artifactId>yuhi-contro-support</artifactId>
+  
+   <parent>
+    <groupId>com.yuhi</groupId>
+    <artifactId>yuhi-base-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+	<relativePath>../yuhi-base-parent/pom.xml</relativePath>
+  </parent>
+  
+  
+  
+  <build>
+    <finalName>yuhi-contro-support</finalName>
+  </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.yuhi</groupId>
+  		<artifactId>yuhi-core</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		 <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+  </dependencies>
+  
+</project>

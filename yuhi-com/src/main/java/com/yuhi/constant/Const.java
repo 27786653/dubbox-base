@@ -87,6 +87,8 @@ public final class Const {
 
     /** 请求属性键值：当前角色名称 */
     public static final String REQ_CUR_ROLE_CODE = "CUR_ROLE_CODE";
+
+	public static final String SYS_INIT = "SYS_INIT";
     
     
     

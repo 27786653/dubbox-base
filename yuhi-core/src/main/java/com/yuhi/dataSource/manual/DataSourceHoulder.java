@@ -1,40 +1,24 @@
-package com.yuhi.dataSource.manual;
-
+package com.yuhi.datasource.manual;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-/**
- *	手动数据库切换
- *	代码侵略污染性高！
- */
+
 public class DataSourceHoulder extends AbstractRoutingDataSource {
-	/**
-	 * 主数据源标识
-	 */
-	public final static String MASTERSTR="MASTER";
-	/**
-	 * 从数据源标示
-	 */
-	public final static String SLAVESTR="SLAVE";
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
-	
-	
-	public  static ThreadLocal<String> data= new ThreadLocal<String>();
-	
 	private AtomicInteger counter = new AtomicInteger();
-	
 	private DataSource master;
 	private List<DataSource> slaves;
 	
-	public DataSourceHoulder(){
-		ChangeDataSource(MASTERSTR);	
+	public  DataSourceHoulder() {
+		// TODO Auto-generated constructor stub
+		ContextHolder.setContextType(ContextHolder.MASTERSTR);
+		slaves=new ArrayList<DataSource>();
 	}
 	@Override
 	protected Object determineCurrentLookupKey() {
@@ -46,29 +30,25 @@ public class DataSourceHoulder extends AbstractRoutingDataSource {
 	public void afterPropertiesSet(){
 	}
 	
-
 	@Override
 	protected DataSource determineTargetDataSource() {
-		String dataSouceName=data.get();
-		if(StringUtils.isEmpty(dataSouceName)||data.get().equals(MASTERSTR)){
-			logger.info("Change DataSourse for Master！");
+		String dataSouceName=ContextHolder.getContextType();
+		int slavesCount = slaves.size();
+		if(slavesCount==0||dataSouceName.equals(ContextHolder.MASTERSTR)){
+			logger.info("Change DataSourse for Master..");
 			return master;
 		}
-		if(data.get().equals(SLAVESTR)){
+		if(dataSouceName.equals(ContextHolder.SLAVESTR)){
 				int count = counter.incrementAndGet();
 				if(count>1000000){
 					counter.set(0);
 				}
-				int n = slaves.size();
-				int index = count%n;
-				logger.info("Change DataSourse for Slavestr！");
+				int index = count%slavesCount;
+				logger.info("Change DataSourse for Slavestr..");
 				return slaves.get(index);
 		}
 		logger.error("no DataSource Exits");
 		return null;
-	}
-	public static void ChangeDataSource(String DataSourceCode){
-		DataSourceHoulder.data.set(DataSourceCode);
 	}
 
 	public DataSource getMaster() {

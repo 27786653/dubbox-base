@@ -1,6 +1,7 @@
 package com.yuhi.sys.test;
 
 
+import org.jboss.resteasy.specimpl.BuiltResponse;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Provider {
@@ -11,5 +12,6 @@ public class Provider {
 //		context.start();
 //		System.in.read(); // 为保证服务一直开着，利用输入流的阻塞来模拟
 		com.alibaba.dubbo.container.Main.main(args);
+		
 	}
 }

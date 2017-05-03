@@ -58,6 +58,21 @@ public interface BaseJdbcDao {
      */
 	public String queryForString(String sql, Object... args);
 	/**
+	 * 根据sql查询，泛型返回集合对象
+	 * @param type
+	 * @param sql
+	 * @param args
+	 * @return
+	 */
+    public <T> List<T> queryforListByType(Class type,String sql, Object... args);
+    /**
+     * 根据sql返回Map集合
+     * @param sql
+     * @param args
+     * @return
+     */
+    public <T> List<Map<String, Object>> queryforMap(String sql, Object... args);
+	/**
      * 数据库id生成器
      * @return String 唯一键值
      */
@@ -104,4 +119,11 @@ public interface BaseJdbcDao {
        *and id=? 
        */
       public int update(Map<String,Object> paramMap,String id);
+      /**
+       * 根据sql进行update
+       * @param sql
+       * @param args
+       * @return
+       */
+      public int updateBySql(String sql,String... args); 
 }

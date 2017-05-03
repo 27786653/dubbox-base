@@ -1,0 +1,21 @@
+<div th:fragment="cssres" th:remove="tag">
+     <meta charset="UTF-8"/>
+      <link rel="stylesheet" th:href="@{/resource/plugins/layui/css/layui.css}" media="all" />
+		<link rel="stylesheet" th:href="@{/resource/plugins/font-awesome/css/font-awesome.min.css}"/>
+		<link rel="stylesheet" th:href="@{/resource/plugins/jquery.bsgrid/builds/css/skins/grid_easyui.min.css}"/>
+		<link rel="stylesheet" th:href="@{/resource/plugins/jquery.bsgrid/builds/merged/bsgrid.all.min.css}"/>
+<link th:href="@{/resource/plugins/ztree/css/metroStyle/metroStyle.css}" rel="stylesheet" type="text/css" />
+<style type="text/css">
+/** 布局 **/
+.site-demo{position:absolute;width:100%;height: 100%;}.site-demo .site-demo-editor{float:left;top:0;bottom:0;left:0;overflow:scroll;height:100%}.result-1{width:10%}.result-2{width:20%}.result-3{width:30%}.result-4{width:40%}.result-5{width:50%}.result-6{width:60%}.result-7{width:70%}.result-8{width:80%}.result-9{width:90%}.site-demo .site-demo-result{float:left;right:0;top:0;bottom:0}
+</style>
+</div>
+
+<div th:fragment="jsres(res,file)" th:remove="tag">
+<script type="text/javascript" th:src="@{/resource/plugins/jquery.bsgrid/plugins/jquery-1.4.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resource/plugins/jquery.bsgrid/builds/js/lang/grid.zh-CN.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resource/plugins/jquery.bsgrid/builds/merged/bsgrid.all.min.js}"></script>
+	<script type="text/javascript" th:src="@{/resource/plugins/layui/layui.js}"></script>
+	<script type="text/javascript" th:src="@{/pages/modules/}+${res}+'/'+${file}+'.js'">
+</script>
+</div>

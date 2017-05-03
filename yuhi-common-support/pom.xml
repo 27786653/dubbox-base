@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yuhi</groupId>
+    <artifactId>yuhi-base-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+	<relativePath>../yuhi-base-parent/pom.xml</relativePath>
+  </parent>
+  <artifactId>yuhi-monitor-support</artifactId>
+  
+  <build>
+    <finalName>yuhi-monitor-support</finalName>
+  </build>
+  
+  <dependencies>
+			 <dependency>
+						<groupId>com.alibaba</groupId>
+						<artifactId>dubbo</artifactId>
+						<scope>provided</scope>
+			</dependency>
+  			 <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-mysql -->
+		     <dependency>
+		        <groupId>io.zipkin.brave</groupId>
+		        <artifactId>brave-core-spring</artifactId>
+		    </dependency>
+		    <dependency>
+		      <groupId>io.zipkin.reporter</groupId>
+		      <artifactId>zipkin-sender-okhttp3</artifactId>
+		    </dependency>
+			<dependency>
+		        <groupId>io.zipkin.brave</groupId>
+		        <artifactId>brave-spring-web-servlet-interceptor</artifactId>
+		    </dependency>
+  </dependencies>
+</project>
