@@ -1,6 +1,7 @@
 package com.yuhi.support;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author 李森林
  *
  */
-public class GzipFilter implements Filter {
+public class GzipFilter implements Filter{
 
     /** 参数键值：头信息 */
     public static final String PARAM_KEY_HEADERS = "headers";

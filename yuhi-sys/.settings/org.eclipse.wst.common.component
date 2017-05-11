@@ -11,6 +11,9 @@
         <dependent-module archiveName="yuhi-com.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yuhi-com/yuhi-com">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="yuhi-admin-facade.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yuhi-admin-facade/yuhi-admin-facade">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="yuhi-sys"/>
         <property name="java-output-path" value="/yuhi-sys/target/classes"/>
     </wb-module>

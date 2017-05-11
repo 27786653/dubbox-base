@@ -5,6 +5,7 @@
 	<projects>
 		<project>yuhi-sys-facade</project>
 		<project>yuhi-com</project>
+		<project>yuhi-admin-facade</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

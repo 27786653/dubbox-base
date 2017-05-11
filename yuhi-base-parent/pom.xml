@@ -14,8 +14,8 @@
 		<module>../yuhi-sys</module>
 		<module>../yuhi-sys-facade</module>
 		<module>../yuhi-sys-service</module>
-		<module>../yuhi-common-support</module>
 		<module>../yuhi-contro-support</module>
+		<module>../yuhi-monitor-support</module>
 		<module>../common-extjsUI</module>
 		<module>../common-easyUI</module>
 	</modules>
