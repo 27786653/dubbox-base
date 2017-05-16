@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yuhi.util.RequestUtils;
+import com.yuhi.util.ResponseUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +19,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.yuhi.base.entity.SysFile;
 import com.yuhi.base.service.SysFileComService;
 import com.yuhi.constant.Const;
-import com.yuhi.support.RequestUtils;
-import com.yuhi.support.ResponseUtils;
 
 @Controller
 public class CommController extends BaseController {

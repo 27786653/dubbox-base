@@ -1,10 +1,6 @@
 package com.yuhi.util;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -19,6 +15,27 @@ public class PropertiesUtil {
 	}
 	public PropertiesUtil(String fileName) {
 		this.properiesName = fileName;
+	}
+	public String readLocalProperty(String key) {
+		String value = "";
+		InputStream is = null;
+		try {
+			is=new FileInputStream(new File(properiesName));
+			Properties p = new Properties();
+			p.load(is);
+			value = p.getProperty(key);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return value;
 	}
 	public String readProperty(String key) {
 		String value = "";

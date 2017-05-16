@@ -1,2 +1,2 @@
-ApiLogFilter=com.yuhi.support.dubbo.support.filter.ApiLogFilter
-TrackFilter=com.yuhi.support.dubbo.support.filter.NodeTrackFilter
+ApiLogFilter=com.yuhi.monitor.support.dubbo.support.filter.ApiLogFilter
+TrackFilter=com.yuhi.monitor.support.dubbo.support.filter.NodeTrackFilter

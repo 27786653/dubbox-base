@@ -14,7 +14,7 @@ public class ForceLogoutFilter extends AccessControlFilter {
         if(session == null) {  
             return true;  
         }  
-        return session.getAttribute(Constants.SESSION_FORCE_LOGOUT_KEY) == null;
+        return session.getAttribute(Constants.System.SESSION_FORCE_LOGOUT_KEY) == null;
     }  
     
     @Override
@@ -23,7 +23,7 @@ public class ForceLogoutFilter extends AccessControlFilter {
             getSubject(request, response).logout();//强制退出  
         } catch (Exception e) {/*ignore exception*/}
         String loginUrl = getLoginUrl() + (getLoginUrl().contains("?") ? "&" : "?") +
-        		Constants.SESSION_FORCE_LOGOUT_PARAM +"=1";  
+        		Constants.System.SESSION_FORCE_LOGOUT_PARAM +"=1";
         WebUtils.issueRedirect(request, response, loginUrl);  
         return false;  
     }  

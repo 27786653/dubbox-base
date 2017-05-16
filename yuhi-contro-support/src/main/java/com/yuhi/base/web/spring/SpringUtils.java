@@ -37,4 +37,9 @@ public class SpringUtils implements DisposableBean, ApplicationContextAware {
         Assert.notNull(clazz);
         return context.getBeansOfType(clazz);
     }
+
+    public static <T> T getBean(Class<T> clazz) {
+        Assert.notNull(clazz);
+        return (T) context.getBean(clazz);
+    }
 }
