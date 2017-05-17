@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<school name="xx大学" address="xx省xx市">
+    <department description="计算机系">
+        <student name="小明" sex="男"/>
+        <student name="小红" sex="女"/>
+        <student name="小王" sex="男"/>
+    </department>
+    <department description="数学系">
+        <student name="小李" sex="男"/>
+        <student name="小新" sex="男"/>
+        <student name="小赵" sex="女"/>
+    </department>
+</school>

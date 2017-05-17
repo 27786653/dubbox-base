@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mocktest systemenv="dev">
+
+    <holder class="com.yuhi.mock.service.impl.LocalMockMethodApdateImpl">
+        <localpropertiesPath>E:\application.properties</localpropertiesPath>
+    </holder>
+
+    <!--<holder class="com.yuhi.mock.service.impl.MockModuleManagerMethodApdateImpl">-->
+        <!--<MockModuleManagerUrl>url</MockModuleManagerUrl>-->
+    <!--</holder>-->
+
+</mocktest>

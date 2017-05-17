@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.yuhi.base.web.spring.SpringUtils;
 import com.yuhi.mock.Constants;
 import com.yuhi.mock.entity.MockMethod;
+import com.yuhi.mock.entity.MockTestConfig;
 import com.yuhi.mock.exception.MockAccessException;
 import com.yuhi.mock.service.impl.LocalMockMethodApdateImpl;
 import com.yuhi.util.PropertiesUtil;
@@ -28,21 +29,28 @@ public class MockClient {
 
     private static final Logger logger = LoggerFactory.getLogger(MockClient.class);
 
+    private static MockTestConfig mockTestConfig=null;
     /**
      * @category 发起调用请求.
      * @author www.justintoForest@Gamil.com
      * @since 2017-05-12 下午 05:11
      */
     public static Object send(Map paramMap, String getInterfaceInfo) {
-        MockMethodApdate mockbeanMethod = SpringUtils.getBean(MockMethodApdate.class);
-        logger.debug("接口名称:"+paramMap.get(Constants.API.API_NAME));
-        logger.debug("接口方法名称:"+paramMap.get(Constants.API.METHOD_NAME));
-        logger.debug("接口方法参数:"+paramMap.get(Constants.API.METHOD_PARAMS));
+        if(mockTestConfig==null)mockTestConfig= MockTestConfig.getinstance();
+        if(mockTestConfig==null)return null;
+//        MockMethodApdate mockbeanMethod = SpringUtils.getBean(MockMethodApdate.class);
+        logger.debug("API-Name:"+paramMap.get(Constants.API.API_NAME));
+        logger.debug("API-Method:"+paramMap.get(Constants.API.METHOD_NAME));
+        logger.debug("API-Method-Params:"+paramMap.get(Constants.API.METHOD_PARAMS));
 //        logger.debug("接口方法返回值类型:"+paramMap.get(Constants.API.RESULT_TYPE));
-        logger.debug("输入参数:"+paramMap.get(Constants.API.CALL_PARAMS_JSON));
+        logger.debug("API-Method-Input:"+paramMap.get(Constants.API.CALL_PARAMS_JSON));
         try {
-            if(!mockbeanMethod.validApi())throw new MockAccessException("模拟测试环境配置校验失败！");
+            MockMethodApdate mockbeanMethod = mockTestConfig.getHolder();
             mockbeanMethod.init(paramMap);
+            if(!mockbeanMethod.validApi()){
+                logger.error("The [API-METHOD] configuration failed validation！");
+                return null;
+            }
             MockMethod mockMethod = mockbeanMethod.loadMethod();
             Class<?> aClass = Class.forName(mockMethod.getResultType());
             if(aClass!=null) {
@@ -51,7 +59,7 @@ public class MockClient {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.debug("输出参数结构错误！！");
+        logger.error("Output Result Parameter structure ERROR！！");
         return null;
     }
 }

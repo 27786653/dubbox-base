@@ -44,7 +44,7 @@ public class MockModuleManagerMethodApdateImpl extends AbstractMockApdate {
         String MockModuleJsonStr=loadJson(MockModuleManagerUrl);
         if(StringUtils.isEmpty(MockModuleJsonStr)||MockModuleJsonStr.length()==0)
         {
-            logger.error("测试系统未注册该数据");
+            logger.error("MOCK-SYSTEM does not register this data!!");
             return false;
         }
         return true;

@@ -28,7 +28,7 @@ public class LocalMockMethodApdateImpl  extends AbstractMockApdate{
 
     public LocalMockMethodApdateImpl() {
         super();
-        logger.debug("使用默认配置路径！！");
+        logger.debug("[LocalMockMethodApdateImpl]: Using the default configuration path！！");
         pu = new PropertiesUtil(localpropertiesPath);
     }
 
@@ -46,14 +46,17 @@ public class LocalMockMethodApdateImpl  extends AbstractMockApdate{
 
     @Override
     public boolean validApi() throws MockAccessException {
+        String resultjson=pu.readLocalProperty(parseKeys(ResultJsonKey));
+        String resulttype=pu.readLocalProperty(parseKeys(ResultTypeKey));
+        if(StringUtils.isEmpty(resultjson)||StringUtils.isEmpty(resulttype))return false;
         return true;
     }
 
 
     @Override
     public MockMethod loadMethod()  throws MockAccessException{
-        String resultjson=pu.readLocalProperty(ResultJsonKey);
-        String resulttype=pu.readLocalProperty(ResultTypeKey);
+        String resultjson=pu.readLocalProperty(parseKeys(ResultJsonKey));
+        String resulttype=pu.readLocalProperty(parseKeys(ResultTypeKey));
         method.setResultType(resulttype);
         method.setResult(resultjson);
         return method;
@@ -73,5 +76,9 @@ public class LocalMockMethodApdateImpl  extends AbstractMockApdate{
 
     public void setResultTypeKey(String resultTypeKey) {
         ResultTypeKey = resultTypeKey;
+    }
+
+    private String parseKeys(String key){
+        return method.getApiname()+"."+method.getMethodname()+"."+key;
     }
 }

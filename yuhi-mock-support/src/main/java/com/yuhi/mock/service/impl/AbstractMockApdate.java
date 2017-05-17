@@ -34,7 +34,7 @@ public abstract class AbstractMockApdate  implements MockMethodApdate {
             method.setParamTypes(paramMap.get(Constants.API.METHOD_PARAMS).toString());
             method.setParamResult(paramMap.get(Constants.API.CALL_PARAMS_JSON).toString());
         }catch (Exception e){
-            throw new MockAccessException("参数设置失败");
+            throw new MockAccessException("APIMethod Parameter setting failed!!!");
         }
     }
 

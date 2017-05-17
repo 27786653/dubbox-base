@@ -10,12 +10,14 @@ import java.util.Properties;
 public class PropertiesUtil {
 	private String properiesName = "";
 
+
 	public PropertiesUtil() {
 
 	}
 	public PropertiesUtil(String fileName) {
 		this.properiesName = fileName;
 	}
+
 	public String readLocalProperty(String key) {
 		String value = "";
 		InputStream is = null;
